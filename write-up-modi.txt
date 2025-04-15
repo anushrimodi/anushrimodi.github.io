@@ -1,0 +1,37 @@
+In this final activity, you will write up your results and submit the write-up and code files.	
+Write up: Answer the following questions in the text file write-up.txt.  Be sure to commit your changes and push the write up to your GitHub repository.
+How long did this take (estimate)?
+What were the enjoyable aspects of the lab?
+What were the challenging parts of this lab?
+What resources did you use? Include links to websites below.
+
+
+1. This lab took me about 3 hours in total. Activity 1 was fairly simple. It took me some time to understand the difference between the 
+basic linkage and multi view handler because the bars looked the same. I spent most of my time understanding the shape genetor acitvity.
+2. I really enjoyed this lab because it helped us dynamically use the bar chart to view changes on the scatterplot,(basically linking 2 charts) and this is similar to what 
+Ryan and I wanted to do in the Final Project. 
+3. The most challenging part was implementing the shape generator activity. It took me some time to figure where to place the jitter function and what it was doing. 
+I was also getting errors while adding the jitter function call around the x coordinate in the attribute line. 
+4. I used resources to recall how to add an ordinal scale for the difficulty level (Lab 4), understand the configuration settings (config variables) and what they were used for,
+.includes function, and add the event listener function, particularly if the filter is active or not. 
+I also looked up the d3.dispatch function, d3.stack, and how to implement the click listener events using dispatcher, jitter function, steamgraph, and the different shapes and brushes in d3.
+
+https://docs.google.com/document/d/1X2DwlV1aHkq83W2Pjdcz09bASxQnYLTKfrVLz1kxS34/edit?tab=t.0#heading=h.yrlfilojserd
+https://github.com/d3/d3-shape
+https://www.w3schools.com/jsref/jsref_includes_array.asp
+https://www.spsanderson.com/steveondata/posts/2023-09-05/index.html#:~:text=The%20jitter%20function%20is%20used,visualizing%20data%20in%20a%20scatterplot.
+https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+https://d3js.org/d3-dispatch
+https://d3js.org/d3-brush
+https://d3-graph-gallery.com/streamgraph
+https://d3js.org/d3-shape/stack
+
+
+
+
+
+
+
+
+
+
