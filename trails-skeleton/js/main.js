@@ -17,8 +17,8 @@ d3.csv('data/vancouver_trails.csv')
      // Be sure to examine your data to fully understand the code
 
      data.forEach(d => {
-        d.length = +d.length;
-        d.elevation_gain = +d.elevation_gain;
+        d.distance = +d.distance;
+        d.time = +d.time;
       });
 
      // Initialize scale

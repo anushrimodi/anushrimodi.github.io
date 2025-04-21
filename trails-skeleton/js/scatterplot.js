@@ -100,8 +100,8 @@ class Scatterplot {
     
     // Specificy accessor functions
     vis.colorValue = d => d.difficulty;
-    vis.xValue = d => d.time;
-    vis.yValue = d => d.distance;
+    vis.xValue = d => d.distance;
+    vis.yValue = d => d.time;
 
     // Set the scale input domains
     vis.xScale.domain([0, d3.max(vis.data, vis.xValue)]);
