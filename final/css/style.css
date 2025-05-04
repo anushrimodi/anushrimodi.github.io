@@ -127,21 +127,44 @@ h2 {
 }
 
 #visualization-wrapper {
-      display: flex;
-      gap: 30px;
-      align-items: flex-start;
-    }
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
 
-    #chart-summary {
-      width: 250px;
-      color: #ddd;
-      font-size: 18px;
-      line-height: 1.5;
-      flex-shrink: 0;
-    }
+#chart-summary {
+  width: 250px;
+  color: #ddd;
+  font-size: 18px;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
 
 .btn.btn-info {
   font-size: 16px;
   background-color: #74bbf9;
   color: black;
+}
+
+/* introjs tutorial style */
+.tutorial-tooltip * {
+  color: rgb(59, 58, 58);
+  font-size: 20px;
+  max-width: 500px;
+}
+.tutorial-tooltip .introjs-tooltip-title {
+  color: #258be4;
+  font-size: 26px;
+}
+.tutorial-tooltip .introjs-tooltiptext{
+  padding: 20px;
+}
+.tutorial-tooltip .introjs-tooltip-button {
+  text-align: left;
+}
+
+/* introjs hint style */
+.hint-tooltip {
+  color: rgb(59, 58, 58);
+  font-size: 18px;
 }

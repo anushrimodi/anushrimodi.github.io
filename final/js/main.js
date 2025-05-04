@@ -17,8 +17,6 @@ d3.csv("data/video-game-sales.csv")
       d.Year         = +d.Year;          
     });
 
-    
-
     drawVis();
 
     d3.selectAll("select").on("change", drawVis);
@@ -64,10 +62,10 @@ function drawVis() {
     scatterplot.updateVis(yAttr, aggregation);
     chartType = "scatterplot";
   }
-updateChartSummary(xAttr, yAttr,chartType );
+updateChartSummary(xAttr, yAttr,chartType,aggregation );
 }
 
-function updateChartSummary(xAttr, yAttr,chartType) {
+function updateChartSummary(xAttr, yAttr,chartType,aggregation) {
   const xLabelMap = {
     "Publisher": "top video game publishers",
     "Genre": "game genres such as Action, Sports, or Puzzle",
@@ -83,11 +81,75 @@ function updateChartSummary(xAttr, yAttr,chartType) {
     "Other_Sales": "other global regions"
   };
 
-  const xPhrase = xLabelMap[xAttr] || "selected category";
-  const yPhrase = yLabelMap[yAttr] || "selected metric";
+  const xPhrase = xLabelMap[xAttr];
+  const yPhrase = yLabelMap[yAttr];
 
-  const summaryText = `This ${chartType} shows ${xPhrase} compared across ${yPhrase}, helping you explore patterns and trends in the video game industry.`;
+  const aggPhrase = aggregation === "count"
+  ? "the number of games released"
+  : "total video game sales";
 
-  document.getElementById("chart-summary").textContent = summaryText;
+  const summaryText = `<span style="color:#4ce7ff; font-weight:bold;">What is this chart doing?</span><br>This ${chartType} shows ${xPhrase} compared across ${yPhrase} based on ${aggPhrase}, helping you explore patterns and trends in the video game industry.`;
+
+  document.getElementById("chart-summary").innerHTML = summaryText;
 }
 
+// call introJs for tutorial
+introJs().setOptions({
+  tooltipClass: "tutorial-tooltip",
+  // detailed info for each step in the tutorial
+  steps: [
+    {
+      title: "Hello there!",
+      intro: "Welcome to our Data Visualization -- Video Game Sale!"
+    },
+    {
+      title: "This is a tutorial",
+      intro: "For the next few steps, we are going to show you how to navigate through this visualization!"
+    },
+    {
+      element: document.querySelector('#x-axis-select'),
+      title: "Attribute button",
+      intro: "Different attributes of video game data, such as Year, Genre, Platform released, and Publisher."
+    },
+    {
+      element: document.querySelector('#y-axis-select'),
+      title: "Region button",
+      intro: "Different regions of video game sale, such as North America, Japan, Europe, and the overall Global sum."
+    }, 
+    {
+      element: document.querySelector('#aggregation-select'),
+      title: "Metric button",
+      intro: "This is about the overall unit you want to use for analysis, whether it is the Number of Copies Sold or the Number of Games Released."
+    }, 
+    {
+      element: document.querySelector('#sort-select'),
+      title: "Sort button",
+      intro: "You can choose to sort by ascending or descending. Note that it ONLY works for Bar Chart."
+    },
+    {
+      element: document.querySelector('#chart-area'),
+      title: "Chart area",
+      intro: "You would see two types of chart here: Bar Chart or Scatter Plot, depending on how you arrange the attributes!",
+      position: "right"
+    },
+    {
+      element: document.querySelector('#chart-summary'),
+      title: "Chart summary",
+      intro: "If you are lost or have trouble understanding what the chart is doing, use the summary to comprehend it! We are here for you!"
+    },
+    {
+      element: document.querySelector('.btn-info'),
+      title: "Original data",
+      intro: "If you are interested in what the original raw data look like, feel free to explore it by clicking here!"
+    },
+    {
+      title: "Have fun!",
+      intro: "This is the end of the tutorial. Wish you learn a little bit about what you can do with this viz!"
+    }
+  ]
+}).start();
+
+// introJs hints for accessibility
+introJs().setOptions({
+  tooltipClass: "hint-tooltip"
+}).addHints();

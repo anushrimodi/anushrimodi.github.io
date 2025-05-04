@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -7,6 +7,7 @@
 	<title>Video Game Sales -- Data Viz Final Project</title>
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet"href="introjs_package/introjs.css">
 	<link rel="stylesheet" href="css/style.css">
 
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -23,9 +24,9 @@
 			<a href="https://www.kaggle.com/datasets/anandshaw2001/video-game-sales" target="_blank" class="btn btn-info" role="button">
 			  View Dataset on Kaggle
 			</a>
-		  </div>
+		</div>
 
-		<!-- Select box to choose the ranking type -->
+		<!-- X axis dropdown -->
 		<form class="form-inline">
 			<div class="form-group">
 			  <label for="x-axis-select"> Attributes :</label>
@@ -36,6 +37,7 @@
 				<option value="Publisher">Publisher</option>
 			  </select>
 
+			  <!-- Y axis dropdown -->
 			  <label for="y-axis-select">Regions:</label>
 			  <select class="form-control" id="y-axis-select">
 				<option value="Global_Sales">Global</option>
@@ -45,41 +47,50 @@
 				<option value="Other_Sales">Other Regions</option>
 			  </select>
 			</div>
-		  </form>
+		</form>
 
-			<!-- Aggregation type toggle -->
+		<!-- Aggregation dropdown -->
 		<form class="form-inline" style="margin-top: 10px;">
-		<div class="form-group">
-		<label for="aggregation-select">Metric:</label>
-		<select class="form-control" id="aggregation-select">
-			<option value="sum">Total Sales</option>
-			<option value="count">Number of Games Released</option>
-		</select>
-		</div>
-	</form>
+			<div class="form-group">
+				<label for="aggregation-select">Metric:</label>
+				<select class="form-control" id="aggregation-select">
+					<option value="sum">Total Sales</option>
+					<option value="count">Number of Games Released</option>
+				</select>
+			</div>
+		</form>
 
-	 <!-- NEW: Sort order dropdown -->
-	 <form class="form-inline" style="margin-top: 10px;">
-		<div class="form-group">
-		  <label for="sort-select">Sort order:</label>
-		  <select class="form-control" id="sort-select">
-			<option value="desc" selected>Descending</option>
-			<option value="asc">Ascending</option>
-		  </select>
-		</div>
-	  </form>
+		<!-- Sort dropdown -->
+		<form class="form-inline" style="margin-top: 10px;">
+			<div class="form-group">
+			<label for="sort-select">Sort order:</label>
+			<select class="form-control" id="sort-select">
+				<option value="desc" selected>Descending</option>
+				<option value="asc">Ascending</option>
+			</select>
+			</div>
+		</form>
 		
-		<!-- Parent container for the visualization -->
+		<!-- We will add the SVG chart to the following container -->
 		<div id="visualization-wrapper">
 		<div id="chart-area"></div>
-		<div id="chart-summary" aria-live="polite"></div>
+		<div 
+			id="chart-summary" 
+			aria-live="polite"
+			data-hint="Feeling lost? No worries! We have a summary for each chart that you could see here."
+    		data-hintPosition="top-right">
+		</div>
 		<div id="tooltip" style="position: absolute; display: none;"></div>
+		
+
 
 	</div>
 
-
-	<!-- Load JS libraries: jQuery, bootstrap, D3 -->
+	<!-- Order matters: we first import D3, then we use it in 
+    scatterplot and barchart. We use our Scatterplot and Barchart
+    objects in our main.js, so it should be last. -->
 	<script src="js/d3.v6.min.js"></script>
+	<script src="introjs_package/intro.js"></script>
     <script src="js/scatterplot.js"></script>
     <script src="js/barchart.js"></script>
     <script src="js/main.js"></script>

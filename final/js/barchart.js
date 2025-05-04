@@ -111,7 +111,7 @@ class Barchart {
       vis.data,
       v => aggregation === "sum"
         ? d3.sum(v, d => d[vis.yAttr])
-        : v.filter(d => d[vis.yAttr] > 0).length,
+        : v.length,
       d => d[vis.xAttr]
     );
 
@@ -175,7 +175,7 @@ class Barchart {
             </div>
             <div>${aggregation === "sum" ? vis.yAttr.replace("_", " ") : "# of Games"}: ${d.value.toFixed(2)}</div>
             <ul>
-              <li>Top 3 Games ${prepositionPhrase} ${d.key}: 
+              <li>Top 3 Games ${prepositionPhrase} ${d.key} (in millions of copies sold): 
                 <ol>
                   ${
                     vis.data
@@ -195,10 +195,7 @@ class Barchart {
           `);
       })
       .on("mousemove", event => {
-        // d3.select("#tooltip")
-        //   .style("left", `${event.pageX + 10}px`)
-        //   .style("top", `${event.pageY + 10}px`);
-        this.positionToolTip(event);
+        vis.positionTooltip(event);
       })
       .on("mouseleave", () => {
         d3.select("#tooltip").style("display", "none");

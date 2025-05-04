@@ -72,11 +72,11 @@ class Scatterplot {
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
         .attr("x", -vis.config.margin.top - vis.height / 2)
-        .attr("y", 11)
+        .attr("y", 15)
         .style("fill", "#66ccff")
         .style("font-size", "16px");
   
-      vis.symbol = d3.symbol().type(d3.symbolCircle).size(160);
+      vis.symbol = d3.symbol().type(d3.symbolCircle).size(240);
     }
   
   /**
@@ -94,7 +94,7 @@ class Scatterplot {
           vis.data,
           v => aggregation === "sum"
             ? d3.sum(v, d => d[yAttr])
-            : v.filter(d => d[yAttr] > 0).length,
+            : v.length,
           d => +d[vis.xAttr]
         ).map(([key, value]) => ({ key, value }));
     
@@ -152,7 +152,7 @@ class Scatterplot {
             <div class="tooltip-title">${d.key}</div>
             <ul>
               <li>${vis.aggregation === 'sum' ? `${d3.format(".4~g")(d.value)} million units` : `Count: ${d3.format(".4~g")(d.value)}`}</li>
-              <li>Top 3 games in ${d.key}: 
+              <li>Top 3 Games in ${d.key} (in millions of copies sold): 
                 <ol>
                   ${
                     vis.data
@@ -172,9 +172,6 @@ class Scatterplot {
           `);
       })
       .on('mousemove', event => {
-        // d3.select('#tooltip')
-        //   .style("left", `${event.pageX + vis.config.tooltipPadding}px`)
-        //   .style("top", `${event.pageY + vis.config.tooltipPadding}px`);
         vis.positionToolTip(event);
       })
       .on('mouseleave', () => {
