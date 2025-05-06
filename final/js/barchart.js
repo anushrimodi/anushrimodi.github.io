@@ -31,7 +31,7 @@ class Barchart {
    * @param {Object}
    * @param {Array}
    */
-  constructor(_config, _data, xAttr, yAttr) {
+  constructor(_config, _data, xAttr, yAttr, aggregation, sortOrder) {
     // Configuration object with defaults
     this.config = {
       parentElement: _config.parentElement,
@@ -43,6 +43,8 @@ class Barchart {
     this.data = _data;
     this.xAttr = xAttr;
     this.yAttr = yAttr;
+    this.aggregation = aggregation;
+    this.sortOrder = sortOrder;
     this.initVis();
   }
   /**
@@ -99,13 +101,20 @@ class Barchart {
       .attr("y", 15)
       .style("fill", "#66ccff")
       .style("font-size", "16px");
+
+    vis.annotationsG = vis.chart
+      .append("g")
+      .attr("class", "annotations-group");
   }
 
   /**
    * Prepare data and scales before we render it
    */
-  updateVis(aggregation = "sum", sortOrder = "desc") {
+  updateVis(aggregation, sortOrder) {
     let vis = this;
+
+    vis.aggregation = aggregation;
+    vis.sortOrder = sortOrder;
 
     const aggregatedDataMap = d3.rollups(
       vis.data,
@@ -128,13 +137,44 @@ class Barchart {
     vis.xScale.domain(vis.aggregatedData.map(vis.xValue));
     vis.yScale.domain([0, d3.max(vis.aggregatedData, vis.yValue)]);
 
-    vis.renderVis(aggregation);
+    // add some annotation explaining the zero-value data
+      vis.annotationSpecification = [
+        {
+          note: { 
+            title: "Zero-value Explanation",
+            label: "You may be wondering why these data are all ZERO? Well, they are all correct datapoints based on the dataset. They are zero because some publishers only launched games in specific region. Therefore, those publishers just had zero sales data. At the same time, we as designers chose to only display a part of the data at a time, therefore making you feel like the data is weird. We eventually made this design choice for the sake of loyalty to the dataset and wished our visualization can accurately reflect what it shows.",
+          },
+          className: "zero-value",
+          type: d3.annotationCalloutRect,
+          x: 0,
+          y: 200,
+          dy: -15,
+          dx: 30,
+          subject: {
+            width: 890,
+            height: 20,
+          }
+        }
+      ];
+
+
+    // Generate the annotation based on the given specifications
+    vis.makeAnnotations = d3.annotation()
+      .annotations(vis.annotationSpecification)
+      .textWrap(385);
+
+    console.log("xAttr:", vis.xAttr);
+    console.log("sortOrder:", vis.sortOrder);
+    console.log("aggregation:", vis.aggregation);
+    console.log("yAttr:", vis.yAttr);
+
+    vis.renderVis();
   }
 
   /**
    * Bind data to visual elements
    */
-  renderVis(aggregation) {
+  renderVis() {
     let vis = this;
 
 
@@ -173,7 +213,7 @@ class Barchart {
             <div class="barchart-tooltip-title">
                <div><strong>${vis.xAttr}:</strong> ${fullName}</div>
             </div>
-            <div>${aggregation === "sum" ? vis.yAttr.replace("_", " ") : "# of Games"}: ${d.value.toFixed(2)}</div>
+            <div>${vis.aggregation === "sum" ? vis.yAttr.replace("_", " ") : "# of Games"}: ${d.value.toFixed(2)}</div>
             <ul>
               <li>Top 3 Games ${prepositionPhrase} ${d.key} (in millions of copies sold): 
                 <ol>
@@ -217,19 +257,30 @@ class Barchart {
     .call(vis.yAxis);
 
     if (vis.xAttr === "Publisher") {
-  vis.xAxisLabel.attr("y", vis.config.margin.top + vis.height + 130);
-} else {
-  vis.xAxisLabel.attr("y", vis.config.margin.top + vis.height + 90);
-}
+      vis.xAxisLabel.attr("y", vis.config.margin.top + vis.height + 130);
+    } else {
+      vis.xAxisLabel.attr("y", vis.config.margin.top + vis.height + 90);
+    }
 
     vis.xAxisLabel.text(vis.xAttr);
     vis.yAxisLabel.text(
-      aggregation === "sum"
+      vis.aggregation === "sum"
         ? `${vis.yAttr.replace("_", " ")} (in millions)`
         : `# of Games ${regionFromYAttr(vis.yAttr)}`
     );
-  }
 
+    // Publisher + ascending + non-Global sales + total sales
+    if (vis.xAttr === "Publisher" && vis.sortOrder === "asc" && 
+      vis.yAttr != "Global_Sales" && vis.aggregation === "sum"){
+        // Add annotation elements to the SVG
+        vis.annotationsG.selectAll("*").remove(); // clear old annotations
+        vis.annotationsG.raise();
+        vis.annotationsG.call(vis.makeAnnotations);
+      } else {
+        vis.annotationsG.selectAll("*").remove(); // clear if not needed
+      }
+  }
+  // dynamically position the tooltip so that it always stays within the screen
   positionTooltip(event) {
     const tooltip = d3.select('#tooltip');
     const tooltipPadding = 10; // or use this.config.tooltipPadding if you add it

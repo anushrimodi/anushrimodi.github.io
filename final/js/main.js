@@ -46,7 +46,7 @@ function drawVis() {
   if (["Genre","Platform","Publisher"].includes(xAttr)) {   
     barchart = new Barchart(
       { parentElement: "#chart-area", colorScale },
-      data, xAttr, yAttr
+      data, xAttr, yAttr, aggregation, sortOrder
     );
     barchart.updateVis(aggregation, sortOrder);
     chartType = "bar chart";
@@ -127,6 +127,11 @@ introJs().setOptions({
       intro: "You can choose to sort by ascending or descending. Note that it ONLY works for Bar Chart."
     },
     {
+      element: document.querySelector('#sort-select'),
+      title: "Sort button",
+      intro: "Sometimes if you want to see maximum and minimum values, you might want to look at BOTH descending and ascending orders to get the full picture."
+    },
+    {
       element: document.querySelector('#chart-area'),
       title: "Chart area",
       intro: "You would see two types of chart here: Bar Chart or Scatter Plot, depending on how you arrange the attributes!",
@@ -143,13 +148,13 @@ introJs().setOptions({
       intro: "If you are interested in what the original raw data look like, feel free to explore it by clicking here!"
     },
     {
+      element: document.querySelector('.tutorial'),
+      title: "Rewatch the tutorial",
+      intro: "If you want to rewatch the tutorial again, just click this button right here!"
+    },
+    {
       title: "Have fun!",
       intro: "This is the end of the tutorial. Wish you learn a little bit about what you can do with this viz!"
     }
   ]
 }).start();
-
-// introJs hints for accessibility
-introJs().setOptions({
-  tooltipClass: "hint-tooltip"
-}).addHints();

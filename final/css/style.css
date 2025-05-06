@@ -168,3 +168,12 @@ h2 {
   color: rgb(59, 58, 58);
   font-size: 18px;
 }
+
+.annotation-note-title {
+  fill: #66ccff;
+  font-size: 18px;
+}
+.annotation-note-label {
+  fill: white;
+  font-size: 16px;
+}

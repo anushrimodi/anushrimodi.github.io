@@ -24,6 +24,7 @@
 			<a href="https://www.kaggle.com/datasets/anandshaw2001/video-game-sales" target="_blank" class="btn btn-info" role="button">
 			  View Dataset on Kaggle
 			</a>
+			<button onClick="window.location.reload();" class="btn btn-info tutorial" style="margin-left: 15px">Tutorial</button>
 		</div>
 
 		<!-- X axis dropdown -->
@@ -76,9 +77,7 @@
 		<div id="chart-area"></div>
 		<div 
 			id="chart-summary" 
-			aria-live="polite"
-			data-hint="Feeling lost? No worries! We have a summary for each chart that you could see here."
-    		data-hintPosition="top-right">
+			aria-live="polite">
 		</div>
 		<div id="tooltip" style="position: absolute; display: none;"></div>
 		
@@ -91,6 +90,7 @@
     objects in our main.js, so it should be last. -->
 	<script src="js/d3.v6.min.js"></script>
 	<script src="introjs_package/intro.js"></script>
+	<script src="js/d3-annotation.min.js"></script>
     <script src="js/scatterplot.js"></script>
     <script src="js/barchart.js"></script>
     <script src="js/main.js"></script>
